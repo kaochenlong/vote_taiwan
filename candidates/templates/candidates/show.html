@@ -1,0 +1,10 @@
+{% extends "candidates/base.html" %}
+
+{% block content %}
+    <h1>候選人 {{ candidate.name }}</h1>
+    <section>
+        <p>政黨: {{ candidate.party }}</p>
+        <p>年齡: {{ candidate.age }}</p>
+        <p>簡介: {{ candidate.introduction }}</p>
+    </section>
+{% endblock %}
