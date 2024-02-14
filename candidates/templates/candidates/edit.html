@@ -1,0 +1,14 @@
+{% extends "candidates/base.html" %}
+
+{% block content %}
+    <h1>更新候選人 {{ candidate.name }}</h1>
+
+    <form action="{% url 'candidates:edit' candidate.id %}" method="post">
+      {% csrf_token %}
+      {{ form }}
+
+      <div>
+        <input type="submit" value="更新候選人" />
+      </div>
+    </form>
+{% endblock %}
