@@ -3,6 +3,11 @@
 {% block content %}
     <h1>候選人列表</h1>
 
+    <form>
+        <input type="search" name="keyword" />
+        <button>搜尋</button>
+    </form>
+
     <a href="{% url 'candidates:new' %}">新增候選人</a>
 
     <ul>

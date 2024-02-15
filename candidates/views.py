@@ -16,7 +16,14 @@ def index(request):
             messages.success(request, "新增候選人成功！")
             return redirect("candidates:index")
 
-    candidates = Candidate.objects.all()
+    # candidates = Candidate.objects.all()
+
+    keyword = request.GET.get("keyword")
+    if keyword:
+        candidates = Candidate.objects.filter(name__icontains=keyword)
+    else:
+        candidates = Candidate.objects.all()
+
     return render(request, "candidates/index.html", {"candidates": candidates})
 
 
