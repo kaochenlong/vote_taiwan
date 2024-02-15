@@ -1,8 +1,15 @@
 from django import forms
+from .models import Candidate
 
 
-class CandidateForm(forms.Form):
-    name = forms.CharField(label="姓名", max_length=100)
-    party = forms.CharField(label="政黨", max_length=50)
-    age = forms.IntegerField(label="年齡")
+class CandidateForm(forms.ModelForm):
     introduction = forms.CharField(label="簡介", widget=forms.Textarea, required=False)
+
+    class Meta:
+        model = Candidate
+        fields = ["name", "party", "age", "introduction"]
+        labels = {
+            "name": "姓名",
+            "party": "政黨",
+            "age": "年齡",
+        }

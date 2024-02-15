@@ -12,8 +12,7 @@ def index(request):
         form = CandidateForm(request.POST)
 
         if form.is_valid():
-            candidate = Candidate(**form.cleaned_data)
-            candidate.save()
+            form.save()
             messages.success(request, "新增候選人成功！")
             return redirect("candidates:index")
 
@@ -35,20 +34,16 @@ def edit(request, id):
     candidate = get_object_or_404(Candidate, id=id)
 
     if request.method == "POST":
-        form = CandidateForm(request.POST)
+        form = CandidateForm(request.POST, instance=candidate)
 
         if form.is_valid():
-            candidate.name = form.cleaned_data["name"]
-            candidate.party = form.cleaned_data["party"]
-            candidate.age = form.cleaned_data["age"]
-            candidate.introduction = form.cleaned_data["introduction"]
-            candidate.save()
+            form.save()
             messages.success(request, "更新候選人成功！")
 
             return redirect("candidates:show", id=id)
 
     else:
-        form = CandidateForm(candidate.__dict__)
+        form = CandidateForm(instance=candidate)
 
     return render(
         request, "candidates/edit.html", {"form": form, "candidate": candidate}
