@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.views.decorators.http import require_POST
 from .models import Candidate
 from .forms import CandidateForm
+from django.contrib import messages
 
 
 def index(request):
@@ -13,6 +14,7 @@ def index(request):
         if form.is_valid():
             candidate = Candidate(**form.cleaned_data)
             candidate.save()
+            messages.success(request, "新增候選人成功！")
             return redirect("candidates:index")
 
     candidates = Candidate.objects.all()
@@ -41,6 +43,7 @@ def edit(request, id):
             candidate.age = form.cleaned_data["age"]
             candidate.introduction = form.cleaned_data["introduction"]
             candidate.save()
+            messages.success(request, "更新候選人成功！")
 
             return redirect("candidates:show", id=id)
 
@@ -56,4 +59,5 @@ def edit(request, id):
 def delete(request, id):
     candidate = get_object_or_404(Candidate, id=id)
     candidate.delete()
+    messages.success(request, "候選人已刪除！")
     return redirect("candidates:index")
