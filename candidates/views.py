@@ -1,5 +1,7 @@
+from django.http.response import HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
+from django.views.decorators.http import require_POST
 from .models import Candidate
 from .forms import CandidateForm
 
@@ -48,3 +50,10 @@ def edit(request, id):
     return render(
         request, "candidates/edit.html", {"form": form, "candidate": candidate}
     )
+
+
+@require_POST
+def delete(request, id):
+    candidate = get_object_or_404(Candidate, id=id)
+    candidate.delete()
+    return redirect("candidates:index")
